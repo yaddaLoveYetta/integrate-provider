@@ -17,6 +17,7 @@ public class AppUserServiceTest extends BaseTest {
 
 	@Test
 	public void testGetAppUserById() {
+		
 
 		IAppUserService appUserService = Environ.getBean(IAppUserService.class);
 

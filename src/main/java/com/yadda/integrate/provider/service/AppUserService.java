@@ -43,8 +43,10 @@ public class AppUserService implements IAppUserService {
 		AppUser user = appUserMapper.selectByPrimaryKey(id);
 
 		return user;
+
 	}
 
+	@ServiceLog(description = "分页获取用户")
 	public List<AppUser> getAllAppUser() {
 
 		if (log.isDebugEnabled()) {

@@ -114,8 +114,9 @@
 	<!-- spring系统启动以后，获取WebApplicationContext容器，提供动态获取实例bean功能 -->
 	<bean class="com.yadda.integrate.provider.util.Environ">
 	</bean>
-	<!-- 启动对@AspectJ注解的支持,做日志 -->
+	<!-- 开启自动扫描 -->
 	<context:component-scan base-package="com.yadda.integrate.provider" />
+	<!-- 启动对@AspectJ注解的支持,做日志 -->
 	<aop:aspectj-autoproxy />
 	<!-- other ben 配置 ==========================================================end======================== -->
 
