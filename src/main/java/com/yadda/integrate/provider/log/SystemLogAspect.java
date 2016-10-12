@@ -114,6 +114,7 @@ public class SystemLogAspect {
 			System.out.println("=====前置通知开始=====");
 			System.out.println("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
 			System.out.println("请求参数:" + JSONObject.toJSON(joinPoint.getArgs()));
+			
 
 			System.out.println("方法描述:" + getServiceMthodDescription(joinPoint));
 			// System.out.println("请求IP:" + ip);
