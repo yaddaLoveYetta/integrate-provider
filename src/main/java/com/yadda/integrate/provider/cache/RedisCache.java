@@ -27,36 +27,57 @@ public class RedisCache implements Cache {
 		if (id == null) {
 			throw new IllegalArgumentException("Cache instances require an ID");
 		}
-		logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>MybatisRedisCache:id=" + id);
+		logger.debug(">>>>>>MybatisRedisCache:id=" + id);
 		this.id = id;
 	}
 
+	@Override
 	public String getId() {
 		return this.id;
 	}
 
+	@Override
 	public void putObject(Object key, Object value) {
-		logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>putObject:" + key + "=" + value);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug(">>>>>>putObject>>key:" + key);
+			logger.debug(">>>>>>putObject>>value:" + value);
+		}
 		try {
+
 			RedisUtil.getJedis().set(SerializeUtil.serialize(key.toString()), SerializeUtil.serialize(value));
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	@Override
 	public Object getObject(Object key) {
+
 		Object value = null;
+
 		try {
 			value = SerializeUtil.unSerialize(RedisUtil.getJedis().get(SerializeUtil.serialize(key.toString())));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>getObject:" + key + "=" + value);
+
+		if (logger.isDebugEnabled()) {
+			if (value != null) {
+				logger.debug(">>>>>> getObject:cache hit");
+				logger.debug(">>>>>> cache key:" + key);
+				logger.debug(">>>>>> cache value:" + value);
+			} else {
+				logger.debug(">>>>>> getObject:cache miss");
+				logger.debug(">>>>>> cache key:" + key);
+			}
+		}
+		// clear();
 		return value;
 	}
 
+	@Override
 	public Object removeObject(Object key) {
 		try {
 			return RedisUtil.getJedis().expire(SerializeUtil.serialize(key.toString()), 0);
@@ -67,14 +88,17 @@ public class RedisCache implements Cache {
 		return null;
 	}
 
+	@Override
 	public void clear() {
 		RedisUtil.getJedis().flushDB();
 	}
 
+	@Override
 	public int getSize() {
 		return Integer.valueOf(RedisUtil.getJedis().dbSize().toString());
 	}
 
+	@Override
 	public ReadWriteLock getReadWriteLock() {
 		return readWriteLock;
 	}
