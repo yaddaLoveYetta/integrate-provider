@@ -1,10 +1,12 @@
 切换到项目目录运行mybatis-generator生成mybatis dao mapper model代码
 java -jar mybatis-generator-core-1.3.5.jar -configfile generatorConfig.xml -overwrite
 
-项目中使用到的第三方框架
+项目中使用到的主要框架
 
 spring
+dubbo
 mybatis
+redis
 
 项目说明
 
