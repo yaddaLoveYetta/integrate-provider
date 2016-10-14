@@ -24,7 +24,7 @@ public class RedisUtil {
 	private static Log logger = LogFactory.getLog(SerializeUtil.class);
 
 	/** 默认缓存时间 */
-	private static final int DEFAULT_CACHE_SECONDS = 60 * 60 * 1;// 单位秒 设置成一个钟
+	private static final int DEFAULT_CACHE_SECONDS = 60;// 单位秒 设置成一分钟
 
 	/** 连接池 **/
 	private static JedisPool jedisPool;
@@ -39,6 +39,7 @@ public class RedisUtil {
 			config.setMaxIdle(8);
 			// 控制一个pool最多有多少个状态为idle(空闲的)的jedis实例。
 			config.setMaxTotal(8);
+			config.setMaxWaitMillis(1000 * 60);
 			// 表示当borrow(引入)一个jedis实例时，最大的等待时间，如果超过等待时间，则直接抛出JedisConnectionException；
 			config.setMaxWaitMillis(1000 * 100);
 			// 在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的；
@@ -47,7 +48,8 @@ public class RedisUtil {
 			config.setTimeBetweenEvictionRunsMillis(30000);
 			config.setNumTestsPerEvictionRun(-1);
 			config.setMinIdle(0);
-			jedisPool = new JedisPool(config, "192.168.191.128", 6379);
+			// jedisPool = new JedisPool(config, "192.168.191.128", 6379);
+			jedisPool = new JedisPool(config, "120.76.139.150", 6379);
 		}
 
 	}
@@ -85,10 +87,10 @@ public class RedisUtil {
 	 * 保存一个对象到Redis中(缓存过期时间:使用此工具类中的默认时间) . <br/>
 	 * 
 	 * @param key
-	 *            键 . <br/>
+	 *            键 <br/>
 	 * @param object
-	 *            缓存对象 . <br/>
-	 * @return true or false . <br/>
+	 *            缓存对象<br/>
+	 * @return true or false
 	 * @throws Exception
 	 */
 	public static Boolean save(Object key, Object object) {
