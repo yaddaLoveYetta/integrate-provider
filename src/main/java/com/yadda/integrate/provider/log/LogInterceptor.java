@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import com.yadda.integrate.provider.annotation.ServiceLog;
 
 /**
- * @description 
+ * @description
  * @author yadda
  * @email silenceisok@163.com
  * @time 2016年10月28日 下午1:59:34
@@ -24,16 +24,9 @@ public class LogInterceptor implements MethodInterceptor {
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 
-		Log log = LogFactory.getLog(invocation.getClass());
-
-//		System.out.println(invocation.getClass().getName());
-//
-//		System.out.println(invocation.getThis().getClass().getName());
+		Log log = LogFactory.getLog(invocation.getThis().getClass());
 
 		Method reflectMethod = invocation.getMethod();
-
-		// System.out.println(reflectMethod.getName());
-		// System.out.println(reflectMethod.getClass());
 
 		Method realMethod = invocation.getThis().getClass().getMethod(reflectMethod.getName(),
 				reflectMethod.getParameterTypes());
@@ -57,12 +50,12 @@ public class LogInterceptor implements MethodInterceptor {
 
 			}
 
-			log.debug(">>>>>> 方法:" + reflectMethod + ">>>>>>> BEGIN >>>>>>>");
+			log.debug(">>>>>> 方法:" + realMethod + ">>>>>>> BEGIN >>>>>>>");
 			log.debug(">>>>>> 参数:" + args.toString());
 		}
 		Object obj = invocation.proceed();// 执行调用链
 
-		log.debug(">>>>>> 方法:" + reflectMethod + ">>>>>>> END >>>>>>");
+		log.debug(">>>>>> 方法:" + realMethod + ">>>>>>> END >>>>>>");
 
 		log.debug(">>>>>> 返回:" + obj.toString() + ">>>>>>> END >>>>>>");
 
