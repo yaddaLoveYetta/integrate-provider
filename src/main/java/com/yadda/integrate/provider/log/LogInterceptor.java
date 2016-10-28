@@ -31,28 +31,30 @@ public class LogInterceptor implements MethodInterceptor {
 		Method realMethod = invocation.getThis().getClass().getMethod(reflectMethod.getName(),
 				reflectMethod.getParameterTypes());
 
+		String description = "";
+
 		if (realMethod.isAnnotationPresent(ServiceLog.class)) {
+			description = realMethod.getAnnotation(ServiceLog.class).description(); // 方法上的描述
+		}
 
-			String description = realMethod.getAnnotation(ServiceLog.class).description(); // 方法上的描述
+		Parameter[] parameters = reflectMethod.getParameters(); // 方法参数名
 
-			Parameter[] parameters = reflectMethod.getParameters(); // 方法参数名
+		Object[] arguments = invocation.getArguments(); // 方法参数值
 
-			Object[] arguments = invocation.getArguments(); // 方法参数值
+		Map<Object, Object> args = new HashMap<Object, Object>();
 
-			Map<Object, Object> args = new HashMap<Object, Object>();
+		if (parameters.length == arguments.length) {
 
-			if (parameters.length == arguments.length) {
+			for (int i = 0; i < parameters.length; i++) {
 
-				for (int i = 0; i < parameters.length; i++) {
-
-					args.put(parameters[i], arguments[i]);
-				}
-
+				args.put(parameters[i].getName(), arguments[i]);
 			}
 
-			log.debug(">>>>>> 方法:" + realMethod + ">>>>>>> BEGIN >>>>>>>");
-			log.debug(">>>>>> 参数:" + args.toString());
 		}
+
+		log.debug(">>>>>> 方法:" + realMethod + ">>>>>>> BEGIN >>>>>>>");
+		log.debug(">>>>>> 参数:" + args.toString());
+
 		Object obj = invocation.proceed();// 执行调用链
 
 		log.debug(">>>>>> 方法:" + realMethod + ">>>>>>> END >>>>>>");
