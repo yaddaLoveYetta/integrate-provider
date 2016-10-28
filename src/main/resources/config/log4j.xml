@@ -77,11 +77,11 @@
 		</filter>
 	</appender>
 
-	<!-- <appender name="DEBUGLog" class="org.apache.log4j.DailyRollingFileAppender"> <param name="File" value="${webapp.root}/logs/debug" /> <param 
-		name="Append" value="true" /> <param name="datePattern" value="'-'yyyy-MM-dd'.log'" /> <param name="MaxFileSize" value="1024KB" /> <param name="MaxBackupIndex" 
-		value="2" /> <layout class="org.apache.log4j.PatternLayout"> <param name="ConversionPattern" value="%-5p %d{MM月dd号 HH:mm} %X{userId} %X{userName} 
-		%-36c %M %5L %m%n" /> </layout> <filter class="org.apache.log4j.varia.LevelRangeFilter"> <param name="LevelMin" value="DEBUG" /> <param name="LevelMax" 
-		value="DEBUG" /> </filter> </appender> -->
+	<!-- <appender name="DEBUGLog" class="org.apache.log4j.DailyRollingFileAppender"> <param name="File" value="${webapp.root}/logs/debug" 
+		/> <param name="Append" value="true" /> <param name="datePattern" value="'-'yyyy-MM-dd'.log'" /> <param name="MaxFileSize" 
+		value="1024KB" /> <param name="MaxBackupIndex" value="2" /> <layout class="org.apache.log4j.PatternLayout"> <param name="ConversionPattern" 
+		value="%-5p %d{MM月dd号 HH:mm} %X{userId} %X{userName} %-36c %M %5L %m%n" /> </layout> <filter class="org.apache.log4j.varia.LevelRangeFilter"> 
+		<param name="LevelMin" value="DEBUG" /> <param name="LevelMax" value="DEBUG" /> </filter> </appender> -->
 
 	<!-- 把INFO信息输出到日志文件 -->
 
@@ -119,11 +119,11 @@
 
 	<!-- 把ERROR信息输出到日志文件 -->
 
-	<!-- <appender name="ERRORLog" class="org.apache.log4j.DailyRollingFileAppender"> <param name="File" value="${webapp.root}/logs/error" /> <param 
-		name="Append" value="true" /> <param name="datePattern" value="'-'yyyy-MM-dd'.log'" /> <param name="MaxFileSize" value="1024KB" /> <param name="MaxBackupIndex" 
-		value="2" /> <layout class="org.apache.log4j.PatternLayout"> <param name="ConversionPattern" value="%-5p %d{MM月dd号 HH:mm} %-36c %M %5L %m%n" 
-		/> </layout> <filter class="org.apache.log4j.varia.LevelRangeFilter"> <param name="LevelMin" value="ERROR" /> <param name="LevelMax" value="ERROR" 
-		/> </filter> </appender> -->
+	<!-- <appender name="ERRORLog" class="org.apache.log4j.DailyRollingFileAppender"> <param name="File" value="${webapp.root}/logs/error" 
+		/> <param name="Append" value="true" /> <param name="datePattern" value="'-'yyyy-MM-dd'.log'" /> <param name="MaxFileSize" 
+		value="1024KB" /> <param name="MaxBackupIndex" value="2" /> <layout class="org.apache.log4j.PatternLayout"> <param name="ConversionPattern" 
+		value="%-5p %d{MM月dd号 HH:mm} %-36c %M %5L %m%n" /> </layout> <filter class="org.apache.log4j.varia.LevelRangeFilter"> <param 
+		name="LevelMin" value="ERROR" /> <param name="LevelMax" value="ERROR" /> </filter> </appender> -->
 
 	<appender name="ERRORLog" class="org.apache.log4j.RollingFileAppender">
 		<param name="File" value="${webapp.root}/logs/error" />
@@ -205,7 +205,7 @@
 		<level value="DEBUG" />
 		<appender-ref ref="IBatis" />
 	</logger>
-	
+
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="DEBUG" />
@@ -220,6 +220,9 @@
 	</logger>
 
 	<logger name="org.springframework.web">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="org.springframework.aop">
 		<level value="DEBUG" />
 	</logger>
 

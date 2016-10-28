@@ -112,13 +112,36 @@
 
 	<!-- other ben 配置 ==========================================================begin====================== -->
 	<!-- spring系统启动以后，获取WebApplicationContext容器，提供动态获取实例bean功能 -->
-	<bean class="com.yadda.integrate.provider.util.Environ">
-	</bean>
+	<bean class="com.yadda.integrate.provider.util.Environ" />
 	<!-- 开启自动扫描 -->
-	<context:component-scan base-package="com.yadda.integrate.provider" />
+	<!-- <context:component-scan base-package="com.yadda.integrate.provider" /> -->
 	<!-- 启动对@AspectJ注解的支持,做日志 -->
-	<aop:aspectj-autoproxy />
+	<!-- <aop:aspectj-autoproxy /> -->
 	<!-- other ben 配置 ==========================================================end======================== -->
+
+	<bean id="logLnterceptor" class="com.yadda.integrate.provider.log.LogInterceptor" />
+
+	<!-- Bean自动代理处理器 配置 -->
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<!-- 指定对满足哪些bean name的bean自动生成业务代理 -->
+		<property name="beanNames">
+			<!-- 下面是所有需要自动创建事务代理的bean -->
+			<list>
+				<!-- <value>commonDao</value> -->
+				<!-- 配置所有Service结尾命名的Bean，即所有Service层的类都要经过exceptionHandler异常处理类 -->
+				<!-- <value>*Service</value> -->
+				<!-- Service层的Bean ID 命名要以Service结尾 -->
+				<value>AppUserService</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<!-- 下面定义BeanNameAutoProxyCreator所需的事务拦截器 -->
+			<list>
+				<!-- <value>exceptionHandler</value> -->
+				<value>logLnterceptor</value>
+			</list>
+		</property>
+	</bean>
 
 	<dubbo:service interface="com.yadda.integrate.api.IAppUserService" ref="AppUserService" protocol="dubbo" />
 
