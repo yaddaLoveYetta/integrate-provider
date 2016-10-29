@@ -16,13 +16,13 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ServiceLog {
+public @interface DoLog {
 	/**
-	 * 描述
+	 * 方法描述
 	 * 
 	 * @Author yadda
 	 * @time 2016年10月11日 下午2:07:24
 	 * @return
 	 */
-	String description() default "";
+	String description();
 }

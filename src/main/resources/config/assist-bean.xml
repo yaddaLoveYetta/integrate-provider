@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 此文件放置系统业务无关配置，如系统日志，权限，错误处理等配置 -->
+
+	<!-- 加载log4j配置 -->
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>classpath:config/log4j.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="logLnterceptor" class="com.yadda.integrate.provider.log.LogInterceptor" />
+
+	<!-- Bean自动代理处理器 配置日志处理 -->
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<!-- 指定对满足哪些bean name的bean自动生成业务代理 -->
+		<property name="beanNames">
+			<!-- 下面是所有需要自动创建事务代理的bean -->
+			<list>
+				<!-- <value>commonDao</value> -->
+				<!-- 配置所有Service结尾命名的Bean，即所有Service层的类都要经过exceptionHandler异常处理类 -->
+				<!-- <value>*Service</value> -->
+				<!-- Service层的Bean ID 命名要以Service结尾 -->
+				<value>AppUserService</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<!-- 下面定义BeanNameAutoProxyCreator所需的事务拦截器 -->
+			<list>
+				<!-- <value>exceptionHandler</value> -->
+				<value>logLnterceptor</value>
+			</list>
+		</property>
+	</bean>
+</beans>

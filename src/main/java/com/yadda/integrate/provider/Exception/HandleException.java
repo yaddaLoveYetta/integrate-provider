@@ -16,7 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class HandleException implements HandlerExceptionResolver {
 
 	@Override
-	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
+			Exception ex) {
 
 		String className = ex.getClass().getSimpleName();
 

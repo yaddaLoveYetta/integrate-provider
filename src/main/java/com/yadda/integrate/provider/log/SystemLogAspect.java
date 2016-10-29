@@ -25,7 +25,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yadda.integrate.provider.annotation.ServiceLog;
+import com.yadda.integrate.provider.annotation.DoLog;
 
 /**
  * @description 系统日志处理切点类
@@ -36,6 +36,7 @@ import com.yadda.integrate.provider.annotation.ServiceLog;
 
 @Aspect
 @Component
+@Deprecated
 public class SystemLogAspect {
 
 	// 本地异常日志记录对象
@@ -118,7 +119,7 @@ public class SystemLogAspect {
 					System.out.println(parameters[i].getName());
 				}
 				if (clazzs.length == arguments.length) {
-					description = method.getAnnotation(ServiceLog.class).description();
+					description = method.getAnnotation(DoLog.class).description();
 					break;
 				}
 			}
@@ -140,7 +141,7 @@ public class SystemLogAspect {
 
 			if (method.getName().equals(methodName)) {
 				Class[] clazzs = method.getParameterTypes();
-				description = method.getAnnotation(ServiceLog.class).description();
+				description = method.getAnnotation(DoLog.class).description();
 			}
 		}
 		return description;

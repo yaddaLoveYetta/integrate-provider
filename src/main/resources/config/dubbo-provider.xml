@@ -12,13 +12,13 @@
 		http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<!-- 导入数据源及事务配置 -->
-	<import resource="classpath:config/data-source.xml" />
-	<!-- 导入业务bean -->
-	<import resource="classpath:config/bussiness-bean.xml" />
-	<!-- 导入dubbo暴露服务 -->
-	<import resource="classpath:config/dubbo-provider.xml" />
-	<!-- 导入系统业务辅助配置 -->
-	<import resource="classpath:config/assist-bean.xml" />
 
-</beans> 
+	<dubbo:application name="integrate-provider" owner="programmer" organization="dubbox" />
+	<dubbo:registry address="zookeeper://127.0.0.1:2181" />
+	<dubbo:protocol name="dubbo" port="20881" />
+
+	<dubbo:provider timeout="6000" />
+
+	<dubbo:service interface="com.yadda.integrate.api.IAppUserService" ref="AppUserService" protocol="dubbo" />
+	
+</beans>
